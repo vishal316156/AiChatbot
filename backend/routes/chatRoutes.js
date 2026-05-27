@@ -1,0 +1,12 @@
+import express from "express";
+import { createChat, deleteChats, getChats, generateResponse } from "../controllers/chatController.js"
+import { protect } from "../middlewares/auth.js"
+
+const chatRouter = express.Router();
+
+chatRouter.post('/create', protect, createChat)
+chatRouter.get('/get', protect, getChats)
+chatRouter.post('/generate', protect, generateResponse)
+chatRouter.post('/delete', protect, deleteChats)
+
+export default chatRouter
