@@ -133,7 +133,7 @@ rounded-md cursor-pointer'>
                 </p>
               </div>
 
-              <img onClick={(e)=>{ e.stopPropagation(),deleteChat(chat._id)}} src={assets.bin_icon}  className='hidden group-hover:block 
+              <img onClick={(e)=>{ e.stopPropagation(),deleteChat(chat._id)}} src={assets.bin_icon}  className='
               w-4 cursor-pointer not-dark:invert' alt="" />
 
             </div>
@@ -156,7 +156,7 @@ rounded-md cursor-pointer'>
 
         <div onClick={() => {  navigate('/dashboard'),  setIsMenuOpen(false) }} 
         className='flex items-center gap-3 border border-gray-300 dark:border-gray-700  rounded-md px-4 py-3 hover:bg-gray-100
-            dark:hover:bg-[#2a2a2a] transition'>
+            dark:hover:bg-[#2a2a2a] transition hover:scale-103 transition-all'>
             <img
             src={assets.chat_icon}
             className='w-5'
@@ -176,7 +176,7 @@ rounded-md cursor-pointer'>
 
 
           <div   className='flex items-center justify-between gap-2 p-3 border border-gray-300 dark:border-white/15 
-            rounded-md ' >
+            rounded-md hover:scale-103 transition-all' >
             <div className='flex items-center gap-2 text-sm'>
               <img src={assets.theme_icon} className='w-4 not-dark:invert' alt="" />
               <p >
