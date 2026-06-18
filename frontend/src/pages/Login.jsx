@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useAppContext } from '../context/AppContext'
+import { assets } from '../assets/assets'
 
 const Login = () => {
 
@@ -47,6 +48,14 @@ const Login = () => {
 
     return (
         <form onSubmit={handleSubmit} className="flex flex-col gap-4 m-auto items-start p-8 py-12 w-80 sm:w-[352px] text-gray-500 rounded-lg shadow-xl border border-gray-200 bg-white">
+
+            <img
+            src={assets.logo_full}
+            alt="QuickGPT"
+            className="w-40 mx-auto mb-2"
+            />
+
+
             <p className="text-2xl font-medium m-auto">
                 <span className="text-purple-700">User</span> {state === "login" ? "Login" : "Sign Up"}
             </p>
@@ -104,6 +113,28 @@ const Login = () => {
             >
                 {state === "register" ? "Create Account" : "Login"}
             </button>
+
+            <div className="w-full border-t pt-4 mt-2 text-center text-sm">
+    <p className="text-gray-500">
+        Need help?
+    </p>
+
+    <div className="flex justify-center gap-4 mt-2">
+        <span
+            onClick={() => navigate('/faq')}
+            className="text-purple-700 cursor-pointer"
+        >
+            FAQ
+        </span>
+
+        <span
+            onClick={() => navigate('/contact')}
+            className="text-purple-700 cursor-pointer"
+        >
+            Contact Us
+        </span>
+    </div>
+</div>
 
         </form>
     )

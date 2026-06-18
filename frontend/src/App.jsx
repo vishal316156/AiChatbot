@@ -10,14 +10,20 @@ import Loading from './pages/Loading'
 import { useAppContext } from './context/AppContext'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
+import FAQ from './pages/FAQ'
+import Contact from './pages/Contact'
+
 
 
 const App = () => {
 
-  const {user} = useAppContext()
+  const {user, authLoading} = useAppContext()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const {pathname} = useLocation()
 
+  if (authLoading) {
+  return <Loading />
+  }
   if(pathname =='/loading') return <Loading/>
 
   return (
@@ -30,18 +36,30 @@ const App = () => {
       <div className='flex h-screen w-screen'>
         <Sidebar isMenuOpen = {isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
         <Routes>
-          <Route path='/' element={<ChatBox/>}/>
-          <Route path='/credits' element={<Credits/>}/>
-          <Route path='/community' element={<Community/>}/>
-          <Route path="/dashboard" element={<Dashboard />} />
-        </Routes>
+        <Route path="/faq" element={<FAQ />} />
+        <Route path="/contact" element={<Contact />} />
+
+        <Route path="/" element={<ChatBox />} />
+        <Route path="/credits" element={<Credits />} />
+        <Route path="/community" element={<Community />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Routes>
       </div>
     </div>) : (
-      <div className='bg-gradient-to-b from-[#242124] to-[#000000] flex 
-      items-centre justify-centre h-screen w-screen'>
-        <Login/>
-      </div>
-    )}
+  <Routes>
+    <Route
+      path="/"
+      element={
+        <div className='bg-gradient-to-b from-[#242124] to-[#000000] flex items-center justify-center h-screen w-screen'>
+          <Login />
+        </div>
+      }
+    />
+
+    <Route path="/faq" element={<FAQ />} />
+    <Route path="/contact" element={<Contact />} />
+  </Routes>
+)}
     </>
   ) 
 }

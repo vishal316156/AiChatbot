@@ -15,9 +15,36 @@ const ChatBox = () => {
   const [mode, setMode] = useState('text')
   const [isPublished, setIsPublished] = useState(false)
 
+  const createNewChat = async () => {
+  const response = await fetch(
+    `${import.meta.env.VITE_BACKEND_URL}/api/chat/create`,
+    {
+      method: "POST",
+      headers: {
+        authorization: localStorage.getItem("token")
+      }
+    }
+  )
+
+  const data = await response.json()
+
+  if (data.success) {
+    setSelectedChat(data.chat)
+    setChats((prev) => [data.chat, ...prev])
+    return data.chat
+  }
+
+  return null
+}
+
   const onSubmit = async (e)=> {
     e.preventDefault()
-    if(!prompt.trim() || !selectedChat) return
+    if (!prompt.trim()) return
+    let activeChat = selectedChat
+
+    if (!activeChat) {
+      activeChat = await createNewChat()
+    }
     try {
       setLoading(true)
       const userMessage = {
@@ -40,7 +67,7 @@ const ChatBox = () => {
             authorization: localStorage.getItem("token")
           },
           body: JSON.stringify({
-            chatId: selectedChat._id,
+            chatId: activeChat._id,
             prompt,
             mode,
             isPublished
@@ -60,15 +87,15 @@ const ChatBox = () => {
   const finalMessages = [...updatedMessages, assistantMessage]
   setMessages(finalMessages)
   const updatedChat = {
-    ...selectedChat,
-    messages: finalMessages
+  ...activeChat,
+  messages: finalMessages
   }
   setSelectedChat(updatedChat)
-  setChats(
-    chats.map((chat)=>
-      chat._id === updatedChat._id ? updatedChat : chat
-    )
+  setChats(prev =>
+  prev.map(chat =>
+    chat._id === updatedChat._id ? updatedChat : chat
   )
+)
 }
     } catch (error) {
     } finally {
